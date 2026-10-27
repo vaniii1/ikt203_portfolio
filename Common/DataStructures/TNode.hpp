@@ -4,3 +4,14 @@
 *					You will create this as a template class typically holding data of type T and pointers to other nodes in the list. (you must choose if this is singel or double linked list)
 *					Please ask for help in Discord if you have any questions or need assistance with the implementation.
 */
+
+#pragma once
+
+template <typename T>
+class TNode {
+public:
+    T data;
+    TNode* next = nullptr;
+    TNode* prev = nullptr;
+    explicit TNode(const T& data) : data(data), next(nullptr), prev(nullptr) {}
+};

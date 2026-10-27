@@ -2,19 +2,22 @@
 // Created by Ivan Hromovyi on 26/10/2026.
 //
 
-#ifndef IKT203_ALGORITHMS_DATASTRUCTURE_DOCUMENTCONTROLLER_H
-#define IKT203_ALGORITHMS_DATASTRUCTURE_DOCUMENTCONTROLLER_H
-#include "../data_structures/linkedl_ist/TLinkedList.h"
-#include "../data_structures/queue/TQueue.h"
-#include "../data_structures/stack/TActionStack.h"
+#ifndef IKT203_ALGORITHMS_DATASTRUCTURE_TEXTCONTROLLER_H
+#define IKT203_ALGORITHMS_DATASTRUCTURE_TEXTCONTROLLER_H
 
+#include "DataStructures/TStack.hpp"
+#include "DataStructures/TLinkedList.hpp"
+#include "DataStructures/TQueue.hpp"
+#include "../models/TAction.h"
+#include "../models/TJob.h"
+#include <string>
 
 class TextController {
 private:
-    TLinkedList* linkedList;
-    TActionStack* redoStack;
-    TActionStack* undoStack;
-    TQueue* queue;
+    TLinkedList<std::string>* linkedList;
+    TStack<TAction>* redoStack;
+    TStack<TAction>* undoStack;
+    TQueue<TJob>* queue;
     int nextJobIndex = 0;
 
     int askUserForIndex();
@@ -41,5 +44,4 @@ private:
     bool SaveToFile();
 };
 
-
-#endif //IKT203_ALGORITHMS_DATASTRUCTURE_DOCUMENTCONTROLLER_H
+#endif //IKT203_ALGORITHMS_DATASTRUCTURE_TEXTCONTROLLER_H

@@ -5,18 +5,13 @@ add_executable(Category-1
     
     
     main.cpp
-        Option-1/data_structures/linkedl_ist/TLinkedList.cpp
-        Option-1/data_structures/linkedl_ist/TLinkedList.h
-        Option-1/data_structures/linkedl_ist/TNode.cpp
-        Option-1/data_structures/linkedl_ist/TNode.h
-        Option-1/data_structures/stack/TActionStack.cpp
-        Option-1/data_structures/stack/TActionStack.h
         Option-1/controlller/TextController.cpp
         Option-1/controlller/TextController.h
-        Option-1/data_structures/queue/TQueue.cpp
-        Option-1/data_structures/queue/TQueue.h
         Option-1/view/TextView.cpp
         Option-1/view/TextView.h
+        ../../Common/DataStructures/TLinkedList.hpp
+        Option-1/models/TAction.h
+        Option-1/models/TJob.h
 )
 
 # Conditionally add the correct source file

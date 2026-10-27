@@ -11,3 +11,58 @@
 *         You will create this as a template class typically holding methods for enqueueing, dequeueing, peeking, and checking the size of the queue.
 *         Please ask for help in Discord if you have any questions or need assistance with the implementation.
 */
+
+template <typename T, int Capacity = 20>
+class TQueue {
+private:
+    T* arr[Capacity];
+    int front = 0;
+    int back = -1;
+    int dataCount = 0;
+public:
+    TQueue(){}
+
+    ~TQueue() {
+        Clear();
+    }
+
+    bool IsEmpty() {
+        return dataCount == 0;
+    }
+
+    bool Enqueue(T* data) {
+        if (dataCount >= Capacity) {
+            return false;
+        }
+        back = (back + 1) % Capacity;
+        arr[back] = data;
+        dataCount++;
+        return true;
+
+    }
+
+    T* Dequeue() {
+        if (IsEmpty()) {
+            return nullptr;
+        }
+        T* item = arr[front];
+        front = (front + 1) % Capacity;
+        dataCount--;
+        return item;
+    }
+
+    T* Peek() {
+        if (IsEmpty()) {
+            return nullptr;
+        }
+        return arr[front];
+    }
+
+    void Clear() {
+        while (!IsEmpty()) {
+            delete Dequeue();
+        }
+        front = 0;
+        back = -1;
+    }
+};

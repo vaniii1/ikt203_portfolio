@@ -2,7 +2,8 @@
 # because nothing is being compiled.
 
 # 2. Create the Library Target as INTERFACE
-add_library(DataStructureLib INTERFACE)
+add_library(DataStructureLib INTERFACE
+        TLinkedList.hpp)
 
 # 3. Handle Include Directories
 # For INTERFACE libraries, we use 'INTERFACE' instead of 'PUBLIC'

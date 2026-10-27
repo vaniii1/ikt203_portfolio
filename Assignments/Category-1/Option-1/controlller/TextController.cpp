@@ -3,12 +3,13 @@
 //
 
 #include "TextController.h"
+#include "../models/TJob.h"
 #include <iostream>
 #include <ostream>
 #include <fstream>
 
-TextController::TextController() : linkedList(new TLinkedList),
-    redoStack(new TActionStack), undoStack(new TActionStack), queue(new TQueue) {}
+TextController::TextController() : linkedList(new TLinkedList<std::string>()),
+    redoStack(new TStack<TAction>), undoStack(new TStack<TAction>), queue(new TQueue<TJob>) {}
 
 TextController::~TextController() {
     delete undoStack;
@@ -46,7 +47,7 @@ void TextController::ProcessPrintJob() {
 void TextController::AppendLine() {
     std::string text = askUserForTextLine();
     linkedList->Append(text);
-    undoStack->Push(new TAction{ActionType::INSERT_LINE, linkedList->GetSize() - 1, text});
+    undoStack->Push(new TAction(ActionType::INSERT_LINE, linkedList->GetSize() - 1, text));
     redoStack->Clear();
 }
 
@@ -54,14 +55,14 @@ bool TextController::InsertLineAtIndex() {
     int index = askUserForIndex();
     std::string text = askUserForTextLine();
     if (!linkedList->InsertAtIndex(index, text)) return false;
-    undoStack->Push(new TAction{ActionType::INSERT_LINE, index, text});
+    undoStack->Push(new TAction(ActionType::INSERT_LINE, index, text));
     redoStack->Clear();
     return true;
 }
 
 bool TextController::DeleteLine() {
     int index = askUserForIndex();
-    std::string* line = linkedList->GetAtIndex(index);
+    auto line = linkedList->GetAtIndex(index);
     if (!line) return false;
     TAction* action = new TAction{ActionType::DELETE_LINE, index, *line};
     linkedList->Remove(index);
