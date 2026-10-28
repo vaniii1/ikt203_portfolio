@@ -3,6 +3,11 @@ option(BUILD_CATEGORY_3_OPTION_1 "Build Assignment-Category 3 Option 1 (Standard
 
 add_executable(Category-3
     main.cpp
+        Option-1/models/TEmployee.h
+        Option-1/helper/TEmployeeLoader.cpp
+        Option-1/helper/TEmployeeLoader.h
+        Option-1/TreeDataStructures/TAVLTree.h
+        Option-1/models/OperationSummary.h
 )
 
 # Conditionally add the correct source file
