@@ -13,43 +13,49 @@
 */
 
 template <typename T, int Capacity = 20>
-class TStack {
+class TStack : public TCollection<T> {
 private:
     T* arr[Capacity];
     int bottom = 0;
-    int count = 0;
+    int size = 0;
 
 public:
 
-    TStack() {}
+    TStack() = default;
 
     ~TStack() {
         Clear();
     }
 
-    bool IsEmpty() {
-        return count == 0;
+    int GetSize() const override {
+        return size;
     }
 
-    void Clear() {
-        while (!IsEmpty()) delete Pop();
+    bool IsEmpty() const override {
+        return size == 0;
+    }
+
+    void Clear() override {
+        while (!IsEmpty()) {
+            delete Pop();
+        }
         bottom = 0;
     }
 
     void Push(T *action) {
-        if (count == Capacity) {
+        if (size == Capacity) {
             delete arr[bottom];
             bottom = (bottom + 1) % Capacity;
-            count--;
+            size--;
         }
-        arr[(bottom + count) % Capacity] = action;
-        count++;
+        arr[(bottom + size) % Capacity] = action;
+        size++;
     }
 
     T* Pop() {
         if (IsEmpty()) return nullptr;
-        count--;
-        return arr[(bottom + count) % Capacity];
+        size--;
+        return arr[(bottom + size) % Capacity];
     }
 };
 

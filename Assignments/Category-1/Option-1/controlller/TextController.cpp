@@ -25,6 +25,7 @@ void TextController::Print() {
     if (!queue->Enqueue(job)) {
         delete job;
         std::cout << "Print queue is full" << std::endl;
+        std::cout << "-------------------------------" << std::endl;
         return;
     }
     std::cout << "New job was added to the queue : " << index << std::endl;
@@ -36,6 +37,7 @@ void TextController::ProcessPrintJob() {
     TJob* job = queue->Dequeue();
     if (!job) {
         std::cout << "No print jobs in the queue" << std::endl;
+        std::cout << "-------------------------------" << std::endl;
         return;
     }
     std::cout << "Processing job with id : " << job->index << std::endl;
@@ -54,7 +56,9 @@ void TextController::AppendLine() {
 bool TextController::InsertLineAtIndex() {
     int index = askUserForIndex();
     std::string text = askUserForTextLine();
-    if (!linkedList->InsertAtIndex(index, text)) return false;
+    if (!linkedList->InsertAtIndex(index, text)) {
+        return false;
+    }
     undoStack->Push(new TAction(ActionType::INSERT_LINE, index, text));
     redoStack->Clear();
     return true;
@@ -63,7 +67,10 @@ bool TextController::InsertLineAtIndex() {
 bool TextController::DeleteLine() {
     int index = askUserForIndex();
     auto line = linkedList->GetAtIndex(index);
-    if (!line) return false;
+    if (!line) {
+        return false;
+    }
+
     TAction* action = new TAction{ActionType::DELETE_LINE, index, *line};
     linkedList->Remove(index);
     undoStack->Push(action);
@@ -73,7 +80,9 @@ bool TextController::DeleteLine() {
 
 bool TextController::Undo() {
     TAction* action = undoStack->Pop();
-    if (!action) return false;
+    if (!action) {
+        return false;
+    }
 
     if (action->type == ActionType::INSERT_LINE) {
         linkedList->Remove(action->index);
@@ -87,7 +96,9 @@ bool TextController::Undo() {
 bool TextController::Redo() {
     TAction* action = redoStack->Pop();
 
-    if (!action) return false;
+    if (!action) {
+        return false;
+    }
 
     if (action->type == ActionType::INSERT_LINE) {
         linkedList->InsertAtIndex(action->index, action->text);
@@ -119,7 +130,9 @@ void TextController::DisplayReverse() {
 bool TextController::LoadFromFile() {
     std::string path = askUserForFilePath();
     std::ifstream file(path);
-    if (!file.is_open()) return false;
+    if (!file.is_open()) {
+        return false;
+    }
 
     linkedList->Clear();
     undoStack->Clear();
@@ -135,7 +148,9 @@ bool TextController::LoadFromFile() {
 bool TextController::SaveToFile() {
     std::string path = askUserForFilePath();
     std::ofstream file(path);
-    if (!file.is_open()) return false;
+    if (!file.is_open()) {
+        return false;
+    }
 
     file << linkedList->GetText();
     if (linkedList->GetSize() > 0) {

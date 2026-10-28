@@ -20,28 +20,34 @@
 
 
 template <typename T>
-class TLinkedList {
+class TDataStructureConverter;
+
+template <typename T>
+class TLinkedList : public TCollection<T> {
 private:
+    friend class TSortPersons;
+    friend class TDataStructureConverter<T>;
+
     TNode<T>* head = nullptr;
     TNode<T>* tail = nullptr;
     int size = 0;
 
     public:
-    TLinkedList() {
-        head = nullptr;
-        tail = nullptr;
-        size = 0;
-    }
+    TLinkedList() = default;
 
     ~TLinkedList() {
         Clear();
     }
 
-    int GetSize() {
+    int GetSize() const override {
         return size;
     }
 
-    void Clear() {
+    bool IsEmpty() const override {
+        return size == 0;
+    }
+
+    void Clear() override {
         TNode<T>* cur = head;
         while (cur) {
             TNode<T>* nodeToDelete = cur;
@@ -175,13 +181,20 @@ private:
         head = temp;
     }
 
-    std::string GetText() {
-        std::string result;
+    std::string GetText() const {
+        std::ostringstream result;
         for (TNode<T>* cur = head; cur != nullptr; cur = cur->next) {
-            result += cur->data;
-            if (cur->next != nullptr) result += "\n";
+            result << cur->data;
+            if (cur->next != nullptr) result << "\n";
         }
-        return result;
+        return result.str();
+    }
+
+    void PrintFirst10() const {
+        int index = 0;
+        for (TNode<T>* cur = head; cur != nullptr && index < 10; cur = cur->next) {
+            std::cout << index++ << ". " << cur->data << std::endl;
+        }
     }
 
     void PrintAll() const {

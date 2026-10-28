@@ -13,32 +13,43 @@
 */
 
 template <typename T, int Capacity = 20>
-class TQueue {
+class TQueue : public TCollection<T> {
 private:
     T* arr[Capacity];
     int front = 0;
     int back = -1;
-    int dataCount = 0;
+    int size = 0;
 public:
-    TQueue(){}
+    TQueue() = default;
 
     ~TQueue() {
         Clear();
     }
 
-    bool IsEmpty() {
-        return dataCount == 0;
+    int GetSize() const override {
+        return size;
+    }
+
+    bool IsEmpty() const override {
+        return size == 0;
+    }
+
+    void Clear() override {
+        while (!IsEmpty()) {
+            delete Dequeue();
+        }
+        front = 0;
+        back = -1;
     }
 
     bool Enqueue(T* data) {
-        if (dataCount >= Capacity) {
+        if (size >= Capacity) {
             return false;
         }
         back = (back + 1) % Capacity;
         arr[back] = data;
-        dataCount++;
+        size++;
         return true;
-
     }
 
     T* Dequeue() {
@@ -47,7 +58,7 @@ public:
         }
         T* item = arr[front];
         front = (front + 1) % Capacity;
-        dataCount--;
+        size--;
         return item;
     }
 
@@ -56,13 +67,5 @@ public:
             return nullptr;
         }
         return arr[front];
-    }
-
-    void Clear() {
-        while (!IsEmpty()) {
-            delete Dequeue();
-        }
-        front = 0;
-        back = -1;
     }
 };
