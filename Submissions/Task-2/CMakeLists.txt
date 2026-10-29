@@ -1,9 +1,18 @@
-# 1. Define the executable name
-# This is what the students will run (e.g., Task-2.exe)
-add_executable(Task-2 main.cpp    )
+cmake_minimum_required(VERSION 4.1)
+project(Task-2)
 
-# 2. Link the Common Library
-# This command connects the executable to your StructureReader code.
-# Because we used 'PUBLIC' in the reader's setup, Task-2 
-# automatically knows where to find "StructureReaderLib.h".
-target_link_libraries(Task-2 PRIVATE StructureReader DebugUtils)
+set(CMAKE_CXX_STANDARD 20)
+
+add_executable(Task-2 main.cpp
+        TMovie.h
+        TMovie.cpp
+        list/TMovieNode.cpp
+        list/TMovieNode.h
+        list/TMovieList.cpp
+        list/TMovieList.h
+        view/TMovieMenu.cpp
+        view/TMovieMenu.h
+        controller/TMovieController.cpp
+        controller/TMovieController.h
+        controller/SearchController.cpp
+        controller/SearchController.h)

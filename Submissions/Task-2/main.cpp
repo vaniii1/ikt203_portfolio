@@ -1,6 +1,15 @@
-﻿#include <iostream>
+
+#include "controller/TMovieController.h"
+#include "list/TMovieList.h"
+#include "view/TMovieMenu.h"
 
 int main() {
+    TMovieList movieList;
+    TMovieController controller(&movieList);
+    controller.SeedMovies();
 
-  return 0;
+    TMovieMenu menu(&controller);
+    menu.GenerateMenu();
+
+    return 0;
 }
