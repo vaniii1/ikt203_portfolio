@@ -3,7 +3,7 @@
 //
 
 #include "TextController.h"
-#include "../models/TJob.h"
+#include "../Models/TJob.h"
 #include <iostream>
 #include <ostream>
 #include <fstream>

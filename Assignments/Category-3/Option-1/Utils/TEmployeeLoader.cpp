@@ -7,8 +7,14 @@
 #include <ctime>
 #include "StructureReader.h"
 
-bool TEmployeeLoader::onNameRead(const int index, const int total,
-                                 const std::string& first, const std::string& last) {
+TEmployeeLoader::~TEmployeeLoader() {
+    delete[] ids;
+}
+
+bool TEmployeeLoader::OnNameRead(
+    const int index, const int total,
+    const std::string& first, const std::string& last) {
+
     if (index >= EMPLOYEE_COUNT) {
         return false;
     }
@@ -23,27 +29,32 @@ bool TEmployeeLoader::onNameRead(const int index, const int total,
     return index + 1 < EMPLOYEE_COUNT;
 }
 
-std::vector<int> TEmployeeLoader::GenerateUniqueIDs() const {
-    std::vector<int> ids;
+int* TEmployeeLoader::GenerateUniqueIDs() const {
+    int* generatedIDs = new int[EMPLOYEE_COUNT];
     std::set<int> usedIDs;
 
-    while (ids.size() < EMPLOYEE_COUNT) {
+    int count = 0;
+
+    while (count < EMPLOYEE_COUNT) {
         int id = 1 + rand() % 10000;
 
         if (usedIDs.insert(id).second) {
-            ids.push_back(id);
+            generatedIDs[count] = id;
+            count++;
         }
     }
-    return ids;
+
+    return generatedIDs;
 }
 
-TLinkedList<TEmployee>& TEmployeeLoader::getEmployees() {
+TLinkedList<TEmployee>& TEmployeeLoader::GetEmployees() {
     return employees;
 }
 
-void TEmployeeLoader::dataInit() {
+void TEmployeeLoader::DataInit() {
     srand(static_cast<unsigned int>(time(nullptr)));
     employees.Clear();
+    delete[] ids;
     ids = GenerateUniqueIDs();
-    ReadNamesFromFile(this, &TEmployeeLoader::onNameRead);
+    ReadNamesFromFile(this, &TEmployeeLoader::OnNameRead);
 }

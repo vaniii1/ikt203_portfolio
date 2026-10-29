@@ -6,14 +6,14 @@ add_executable(Category-2
     
     main.cpp
         Option-1/models/TPerson.h
-        Option-1/helper/TDataLoader.cpp
-        Option-1/helper/TDataLoader.h
-        Option-1/helper/TSortPersons.cpp
-        Option-1/helper/TSortPersons.h
-        Option-1/helper/TDataStructureConverter.h
-        Option-1/helper/TSearchPersons.cpp
-        Option-1/helper/TSearchPersons.h
-        Option-1/helper/TPersonComparators.h
+        Option-1/Utils/TDataLoader.cpp
+        Option-1/Utils/TDataLoader.h
+        Option-1/Algorithms/TSortPersons.cpp
+        Option-1/Algorithms/TSortPersons.h
+        Option-1/Utils/TDataStructureConverter.h
+        Option-1/Algorithms/TSearchPersons.cpp
+        Option-1/Algorithms/TSearchPersons.h
+        Option-1/Utils/TPersonComparators.h
 )
 
 # Conditionally add the correct source file

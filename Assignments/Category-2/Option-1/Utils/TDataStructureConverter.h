@@ -6,7 +6,6 @@
 #define IKT203_ALGORITHMS_DATASTRUCTURE_TDATASTRUCTURECONVERTER_H
 #include "DataStructures/TLinkedList.hpp"
 
-
 template <typename T>
 class TDataStructureConverter {
     public:

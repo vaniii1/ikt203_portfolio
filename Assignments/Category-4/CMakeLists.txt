@@ -5,6 +5,13 @@ add_executable(Category-4
     
     
     main.cpp
+        Option-1/Utils/TGraphLoader.cpp
+        Option-1/Utils/TGraphLoader.h
+        ../../Common/DataStructures/TEdge.hpp
+        ../../Common/DataStructures/TGraph.hpp
+        Option-1/GraphAlgorithms/TMinHeap.h
+        Option-1/GraphAlgorithms/TPrim.h
+        Option-1/View/TGraphView.h
 )
 
 # Conditionally add the correct source file

@@ -2,19 +2,19 @@
 
 #include <iostream>
 #include "DataStructures/TLinkedList.hpp"
-#include "helper/TEmployeeLoader.h"
-#include "models/TEmployee.h"
+#include "Utils/TEmployeeLoader.h"
+#include "Models/TEmployee.h"
 #include "TreeDataStructures/TAVLTree.h"
 #include "TreeDataStructures/TBinarySearchTree.h"
 
 int RunApp(int argc, char* argv[]) {
 	TEmployeeLoader loader;
-	loader.dataInit();
+	loader.DataInit();
 
 	TBinarySearchTree<TEmployee> bst;
 	TAVLTree<TEmployee> avl;
 
-	TLinkedList<TEmployee>& employees = loader.getEmployees();
+	TLinkedList<TEmployee>& employees = loader.GetEmployees();
 
 	for (int i = 0; i < employees.GetSize(); i++) {
 		TEmployee* employee = employees.GetAtIndex(i);

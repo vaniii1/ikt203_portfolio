@@ -4,7 +4,7 @@
 
 #ifndef IKT203_ALGORITHMS_DATASTRUCTURE_TSORT_H
 #define IKT203_ALGORITHMS_DATASTRUCTURE_TSORT_H
-#include "../models/TPerson.h"
+#include "../Models/TPerson.h"
 #include "DataStructures/TLinkedList.hpp"
 #include "DataStructures/TNode.hpp"
 

@@ -4,7 +4,7 @@
 
 #ifndef IKT203_ALGORITHMS_DATASTRUCTURE_TSEARCHPERSONS_H
 #define IKT203_ALGORITHMS_DATASTRUCTURE_TSEARCHPERSONS_H
-#include "../models/TPerson.h"
+#include "../Models/TPerson.h"
 
 class TSearchPersons {
 private:

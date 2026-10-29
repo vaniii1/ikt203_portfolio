@@ -1,9 +1,9 @@
 
-#include "helper/TDataLoader.h"
-#include "helper/TDataStructureConverter.h"
-#include "helper/TPersonComparators.h"
-#include "helper/TSearchPersons.h"
-#include "helper/TSortPersons.h"
+#include "Utils/TDataLoader.h"
+#include "Utils/TDataStructureConverter.h"
+#include "Utils/TPersonComparators.h"
+#include "Algorithms/TSearchPersons.h"
+#include "Algorithms/TSortPersons.h"
 
 
 void PrintFirst10InArrayOfPersons(TPerson** array) {
@@ -14,9 +14,9 @@ void PrintFirst10InArrayOfPersons(TPerson** array) {
 
 int RunApp(int argc, char* argv[]) {
 	TDataLoader dataLoader;
-	dataLoader.dataInit();
-	auto guests = dataLoader.getGuests();
-	auto employees = dataLoader.getEmployees();
+	dataLoader.DataInit();
+	auto guests = dataLoader.GetGuests();
+	auto employees = dataLoader.GetEmployees();
 
 	TSortPersons::MergeSort(*guests, compareByName);
 	TSortPersons::MergeSort(*employees, compareByName);

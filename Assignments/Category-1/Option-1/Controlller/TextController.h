@@ -8,8 +8,8 @@
 #include "DataStructures/TStack.hpp"
 #include "DataStructures/TLinkedList.hpp"
 #include "DataStructures/TQueue.hpp"
-#include "../models/TAction.h"
-#include "../models/TJob.h"
+#include "../Models/TAction.h"
+#include "../Models/TJob.h"
 #include <string>
 
 class TextController {

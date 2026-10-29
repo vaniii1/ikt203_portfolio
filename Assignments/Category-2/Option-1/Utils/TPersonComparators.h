@@ -5,7 +5,7 @@
 #ifndef IKT203_ALGORITHMS_DATASTRUCTURE_TPERSONCOMPARATORS_H
 #define IKT203_ALGORITHMS_DATASTRUCTURE_TPERSONCOMPARATORS_H
 
-#include "../models/TPerson.h"
+#include "../Models/TPerson.h"
 
 inline int compareByName(const TPerson& a, const TPerson& b) {
     if (a.lastName < b.lastName) {

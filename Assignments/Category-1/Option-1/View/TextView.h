@@ -6,7 +6,7 @@
 #define IKT203_ALGORITHMS_DATASTRUCTURE_DOCUMENTVIEW_H
 
 
-#include "../controlller/TextController.h"
+#include "../Controlller/TextController.h"
 
 class TextView {
 private:

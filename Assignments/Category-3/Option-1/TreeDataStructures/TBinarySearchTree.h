@@ -6,7 +6,7 @@
 #define IKT203_ALGORITHMS_DATASTRUCTURE_TBINARYSEARCHTREE_H
 #include <algorithm>
 #include "TTreeNode.h"
-#include "../models/OperationSummary.h"
+#include "../Models/OperationSummary.h"
 #include "DataStructures/TQueue.hpp"
 #include "DataStructures/TLinkedList.hpp"
 

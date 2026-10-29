@@ -3,7 +3,11 @@
 
 # 2. Create the Library Target as INTERFACE
 add_library(DataStructureLib INTERFACE
-        TLinkedList.hpp)
+        TLinkedList.hpp
+        ../../Assignments/Category-3/Option-1/TreeDataStructures/TTreeNode.h
+        ../../Assignments/Category-3/Option-1/TreeDataStructures/TBinarySearchTree.h
+        TEdge.hpp
+        TGraph.hpp)
 
 # 3. Handle Include Directories
 # For INTERFACE libraries, we use 'INTERFACE' instead of 'PUBLIC'

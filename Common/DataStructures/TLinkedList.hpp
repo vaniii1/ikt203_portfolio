@@ -18,15 +18,13 @@
 * @tparam T The type of elements stored in the linked list.
 */
 
-
-template <typename T>
-class TDataStructureConverter;
-
 template <typename T>
 class TLinkedList : public TCollection<T> {
 private:
     friend class TSortPersons;
-    friend class TDataStructureConverter<T>;
+    template <typename U> friend class TDataStructureConverter;
+    template <typename U> friend class TVertex;
+    template <typename U> friend class TGraph;
 
     TNode<T>* head = nullptr;
     TNode<T>* tail = nullptr;

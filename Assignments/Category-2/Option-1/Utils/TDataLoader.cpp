@@ -2,7 +2,7 @@
 // Created by Ivan Hromovyi on 27/10/2026.
 //
 
-#include "TDataLoader.h"
+#include "../Utils/TDataLoader.h"
 #include "StructureReader.h"
 
 TDataLoader::TDataLoader()
@@ -14,7 +14,7 @@ TDataLoader::~TDataLoader() {
     delete employees;
 }
 
-bool TDataLoader::onNameRead(const int index, const int total,
+bool TDataLoader::OnNameRead(const int index, const int total,
     const std::string &first, const std::string &last) {
     TPerson p;
     p.firstName = first;
@@ -31,15 +31,15 @@ bool TDataLoader::onNameRead(const int index, const int total,
     return true;
 }
 
-TLinkedList<TPerson>* TDataLoader::getGuests() const {
+TLinkedList<TPerson>* TDataLoader::GetGuests() const {
     return guests;
 }
 
-TLinkedList<TPerson>* TDataLoader::getEmployees() const {
+TLinkedList<TPerson>* TDataLoader::GetEmployees() const {
     return employees;
 }
 
-void TDataLoader::dataInit() {
+void TDataLoader::DataInit() {
     srand(static_cast<unsigned>(time(nullptr)));
-    ReadNamesFromFile(this, &TDataLoader::onNameRead);
+    ReadNamesFromFile(this, &TDataLoader::OnNameRead);
 }

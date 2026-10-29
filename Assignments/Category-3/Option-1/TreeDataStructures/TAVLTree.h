@@ -7,7 +7,7 @@
 
 #include <algorithm>
 #include "TTreeNode.h"
-#include "../models/OperationSummary.h"
+#include "../Models/OperationSummary.h"
 #include "DataStructures/TLinkedList.hpp"
 #include "DataStructures/TQueue.hpp"
 

@@ -8,3 +8,42 @@
 */
 
 // Add your template here:
+template <typename T>
+class TVertex;
+
+template <typename T>
+class TEdge {
+private:
+    TVertex<T>* source;
+    TVertex<T>* destination;
+    float weight;
+
+public:
+    TEdge(TVertex<T>* source, TVertex<T>* destination, float weight)
+        : source(source), destination(destination), weight(weight) {
+    }
+
+    TVertex<T>* GetSource() const {
+        return source;
+    }
+
+    TVertex<T>* GetDestination() const {
+        return destination;
+    }
+
+    float GetWeight() const {
+        return weight;
+    }
+
+    TVertex<T>* GetOther(const TVertex<T>* vertex) const {
+        if (vertex == source) {
+            return destination;
+        }
+
+        if (vertex == destination) {
+            return source;
+        }
+
+        return nullptr;
+    }
+};

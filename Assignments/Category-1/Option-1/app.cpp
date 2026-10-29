@@ -1,7 +1,7 @@
 // Option 1 part of Assignments/Category-1
 
 
-#include "view/TextView.h"
+#include "View/TextView.h"
 
 int RunApp(int argc, char* argv[]) {
 	TextView textView;

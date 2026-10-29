@@ -4,7 +4,7 @@
 
 #ifndef IKT203_ALGORITHMS_DATASTRUCTURE_DATACONTROLLER_H
 #define IKT203_ALGORITHMS_DATASTRUCTURE_DATACONTROLLER_H
-#include "../models/TPerson.h"
+#include "../Models/TPerson.h"
 #include "DataStructures/TLinkedList.hpp"
 
 
@@ -14,18 +14,18 @@ private:
 
     TLinkedList<TPerson> *guests;
     TLinkedList<TPerson> *employees;
-    bool onNameRead(const int index, const int total,
+    bool OnNameRead(const int index, const int total,
                 const std::string& first, const std::string& last);
 public:
 
-    TLinkedList<TPerson>* getGuests() const;
-    TLinkedList<TPerson>* getEmployees() const;
+    TLinkedList<TPerson>* GetGuests() const;
+    TLinkedList<TPerson>* GetEmployees() const;
 
     TDataLoader();
 
     ~TDataLoader();
 
-    void dataInit();
+    void DataInit();
 
 };
 
