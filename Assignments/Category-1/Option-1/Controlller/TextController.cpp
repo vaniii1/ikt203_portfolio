@@ -8,7 +8,7 @@
 #include <ostream>
 #include <fstream>
 
-TextController::TextController() : linkedList(new TLinkedList<std::string>()),
+TextController::TextController() : linkedList(new TLinkedList<std::string>(true)),
     redoStack(new TStack<TAction>), undoStack(new TStack<TAction>), queue(new TQueue<TJob>) {}
 
 TextController::~TextController() {
@@ -22,12 +22,7 @@ void TextController::Print() {
     std::cout << "-------------------------------" << std::endl;
     int index = nextJobIndex++;
     TJob *job = new TJob(index, linkedList->GetText());
-    if (!queue->Enqueue(job)) {
-        delete job;
-        std::cout << "Print queue is full" << std::endl;
-        std::cout << "-------------------------------" << std::endl;
-        return;
-    }
+    queue->Enqueue(job);
     std::cout << "New job was added to the queue : " << index << std::endl;
     std::cout << "-------------------------------" << std::endl;
 }
@@ -66,16 +61,16 @@ bool TextController::InsertLineAtIndex() {
 
 bool TextController::DeleteLine() {
     int index = askUserForIndex();
-    auto line = linkedList->GetAtIndex(index);
-    if (!line) {
+    if (index < 0 || index >= linkedList->GetSize()) {
         return false;
     }
-
-    TAction* action = new TAction{ActionType::DELETE_LINE, index, *line};
+    std::string line = linkedList->GetAtIndex(index);
+    TAction* action = new TAction(ActionType::DELETE_LINE, index, line);
     linkedList->Remove(index);
     undoStack->Push(action);
     redoStack->Clear();
     return true;
+
 }
 
 bool TextController::Undo() {

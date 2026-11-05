@@ -8,10 +8,13 @@
 #pragma once
 
 template <typename T>
+class TLinkedList;
+
+template <typename T>
 class TNode {
 public:
     T data;
-    TNode* next = nullptr;
-    TNode* prev = nullptr;
+    TNode* next;
+    TNode* prev;
     explicit TNode(const T& data) : data(data), next(nullptr), prev(nullptr) {}
 };

@@ -6,7 +6,8 @@
 #include "StructureReader.h"
 
 TDataLoader::TDataLoader()
-    : guests(new TLinkedList<TPerson>), employees(new TLinkedList<TPerson>) {
+    : guests(new TLinkedList<TPerson*>(true)),
+        employees(new TLinkedList<TPerson*>(true)) {
 }
 
 TDataLoader::~TDataLoader() {
@@ -16,26 +17,28 @@ TDataLoader::~TDataLoader() {
 
 bool TDataLoader::OnNameRead(const int index, const int total,
     const std::string &first, const std::string &last) {
-    TPerson p;
-    p.firstName = first;
-    p.lastName = last;
-    p.cabinSize = rand() % 4 + 1;
+    TPerson* person = new TPerson;
+
+    person->firstName = first;
+    person->lastName = last;
+    person->cabinSize = rand() % 4 + 1;
 
     if (index < EMPLOYEE_COUNT) {
-        p.status = Status::EMPLOYEE;
-        employees->Append(p);
+        person->status = Status::EMPLOYEE;
+        employees->Append(person);
     } else {
-        p.status = Status::GUEST;
-        guests->Append(p);
+        person->status = Status::GUEST;
+        guests->Append(person);
     }
+
     return true;
 }
 
-TLinkedList<TPerson>* TDataLoader::GetGuests() const {
+TLinkedList<TPerson*>* TDataLoader::GetGuests() const {
     return guests;
 }
 
-TLinkedList<TPerson>* TDataLoader::GetEmployees() const {
+TLinkedList<TPerson*>* TDataLoader::GetEmployees() const {
     return employees;
 }
 

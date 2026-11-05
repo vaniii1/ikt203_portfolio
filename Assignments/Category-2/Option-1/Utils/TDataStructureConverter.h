@@ -9,14 +9,14 @@
 template <typename T>
 class TDataStructureConverter {
     public:
-    static T** FromLinkedListToArray(TLinkedList<T>& list) {
+    static T** FromLinkedListToArray(TLinkedList<T*>& list) {
         int size = list.GetSize();
         T** array = new T*[size];
 
-        TNode<T>* current = list.head;
+        TNode<T*>* current = list.GetHead();
 
         for (int i = 0; i < size; i++) {
-            array[i] = &current->data;
+            array[i] = current->data;
             current = current->next;
         }
 

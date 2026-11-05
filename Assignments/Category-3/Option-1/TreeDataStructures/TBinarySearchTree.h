@@ -108,6 +108,7 @@ public:
 
     ~TBinarySearchTree() {
         DeleteSubtree(root);
+        delete summary;
     }
 
     bool Insert(int key, const T& value) {
@@ -115,7 +116,7 @@ public:
     }
 
     T* Search(int key) const {
-        std::cout << "--------------BinarySearchTree--------------" << std::endl;
+        std::cout << "-----------------BST Search-----------------" << std::endl;
         resetSummary(summary);
         T* result = SearchNode(root, key);
         printSummary(summary);

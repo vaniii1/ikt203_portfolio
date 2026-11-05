@@ -12,13 +12,11 @@
 *         Please ask for help in Discord if you have any questions or need assistance with the implementation.
 */
 
-template <typename T, int Capacity = 20>
+template <typename T>
 class TQueue : public TCollection<T> {
 private:
-    T* arr[Capacity];
-    int front = 0;
-    int back = -1;
-    int size = 0;
+    TLinkedList<T*> list{false};
+
 public:
     TQueue() = default;
 
@@ -27,28 +25,19 @@ public:
     }
 
     int GetSize() const override {
-        return size;
+        return list.GetSize();
     }
 
     bool IsEmpty() const override {
-        return size == 0;
+        return list.IsEmpty();
     }
 
     void Clear() override {
-        while (!IsEmpty()) {
-            delete Dequeue();
-        }
-        front = 0;
-        back = -1;
+        list.Clear();
     }
 
     bool Enqueue(T* data) {
-        if (size >= Capacity) {
-            return false;
-        }
-        back = (back + 1) % Capacity;
-        arr[back] = data;
-        size++;
+        list.Append(data);
         return true;
     }
 
@@ -56,16 +45,13 @@ public:
         if (IsEmpty()) {
             return nullptr;
         }
-        T* item = arr[front];
-        front = (front + 1) % Capacity;
-        size--;
-        return item;
+        return list.Remove(0);
     }
 
     T* Peek() {
         if (IsEmpty()) {
             return nullptr;
         }
-        return arr[front];
+        return list.GetAtIndex(0);
     }
 };

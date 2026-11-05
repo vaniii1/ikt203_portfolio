@@ -10,7 +10,6 @@ struct OperationSummary {
     double timeSpentMs = 0.0;
 };
 
-
 static void resetSummary(OperationSummary *summary)
 {
     summary->comparisons = 0;

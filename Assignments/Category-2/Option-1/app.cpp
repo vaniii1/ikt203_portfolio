@@ -41,6 +41,7 @@ int RunApp(int argc, char* argv[]) {
 
 	TPerson** alphabeticallyArray
 		= TDataStructureConverter<TPerson>::FromLinkedListToArray(*guests);
+
 	TPerson target;
 	target.firstName = "Keren";
 	target.lastName = "Agee";

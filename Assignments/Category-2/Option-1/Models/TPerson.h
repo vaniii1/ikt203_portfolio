@@ -7,7 +7,6 @@
 #include <string>
 #include <ostream>
 
-
 enum class Status {
     GUEST,
     EMPLOYEE
@@ -16,11 +15,11 @@ enum class Status {
 inline std::string StatusToString(Status status) {
     switch (status) {
         case Status::GUEST:
-            return "Guest";
+            return "GUEST";
         case Status::EMPLOYEE:
-            return "Employee";
+            return "EMPLOYEE";
         default:
-            return "Unknown";
+            return "UNKNOWN";
     }
 }
 
@@ -31,7 +30,7 @@ struct TPerson {
     int cabinSize;
 
     std::string ToString() const {
-        return firstName + " " + lastName + ", status : "
+        return lastName + " " + firstName + ", "
             + StatusToString(status) + ", cabin : " + std::to_string(cabinSize);
     }
 };

@@ -20,22 +20,11 @@ private:
     TLinkedList<TEdge<T>*> edges;
 
 public:
-    TGraph() = default;
+    TGraph() : vertices(true), edges(true) {}
 
     ~TGraph() {
-        for (auto* current = edges.head;
-             current != nullptr;
-             current = current->next) {
-
-            delete current->data;
-        }
-
-        for (auto* current = vertices.head;
-            current != nullptr;
-            current = current->next) {
-
-            delete current->data;
-        }
+        vertices.Clear();
+        edges.Clear();
     }
 
     TVertex<T>* AddVertex(const std::string& name) {
@@ -70,7 +59,7 @@ public:
     }
 
     TVertex<T>* GetVertex(const std::string& name) {
-        for (auto* current = vertices.head;
+        for (auto* current = vertices.GetHead();
              current != nullptr;
              current = current->next) {
 
@@ -85,9 +74,7 @@ public:
     }
 
     TVertex<T>* GetVertexAt(int index) {
-        TVertex<T>** vertex = vertices.GetAtIndex(index);
-
-        return vertex != nullptr ? *vertex : nullptr;
+        return vertices.GetAtIndex(index);
     }
 
     int GetVertexCount() const {

@@ -68,35 +68,42 @@ private:
         if (node == nullptr)
             return new TTreeNode<T>(key, value);
 
-        if (key < node->key)
+        if (key < node->key) {
             node->left = InsertHelper(node->left, key, value);
-        else if (key > node->key)
-            node->right = InsertHelper(node->right, key, value);
-        else
-            return node;
+        }
+        else {
+            if (key > node->key) {
+                node->right = InsertHelper(node->right, key, value);
+            }
+            else {
+                return node;
+            }
+        }
 
         node->height = 1 + std::max(GetHeight(node->left), GetHeight(node->right));
 
         int b = GetBalance(node);
 
-        // LL
-        if (b > 1 && key < node->left->key)
-            return RotateRight(node);
-
-        // RR
-        if (b < -1 && key > node->right->key)
-            return RotateLeft(node);
-
-        // LR
-        if (b > 1 && key > node->left->key) {
-            node->left = RotateLeft(node->left);
-            return RotateRight(node);
+        // LL / LR
+        if (b > 1) {
+            if (key < node->left->key) {
+                return RotateRight(node);
+            }
+            if (key > node->left->key) {
+                node->left = RotateLeft(node->left);
+                return RotateRight(node);
+            }
         }
 
-        // RL
-        if (b < -1 && key < node->right->key) {
-            node->right = RotateRight(node->right);
-            return RotateLeft(node);
+        // RR / RL
+        if (b < -1) {
+            if (key > node->right->key) {
+                return RotateLeft(node);
+            }
+            if (key < node->right->key) {
+                node->right = RotateRight(node->right);
+                return RotateLeft(node);
+            }
         }
 
         return node;
@@ -138,6 +145,7 @@ public:
 
     ~TAVLTree() {
         DestroyHelper(root);
+        delete summary;
     }
 
     void Insert(int key, const T& value) {
@@ -145,7 +153,7 @@ public:
     }
 
     T* Search(int key) const {
-        std::cout << "------------------AVLTree-------------------" << std::endl;
+        std::cout << "----------------AVL Search-----------------" << std::endl;
         resetSummary(summary);
         T* result = SearchNode(root, key);
         printSummary(summary);

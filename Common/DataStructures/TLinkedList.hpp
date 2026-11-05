@@ -21,22 +21,33 @@
 template <typename T>
 class TLinkedList : public TCollection<T> {
 private:
-    friend class TSortPersons;
-    template <typename U> friend class TDataStructureConverter;
-    template <typename U> friend class TVertex;
-    template <typename U> friend class TGraph;
-
     TNode<T>* head = nullptr;
     TNode<T>* tail = nullptr;
     int size = 0;
+    bool isDataOwner;
 
     public:
-    TLinkedList() = default;
+    TLinkedList(bool isDataOwner = false) : isDataOwner(isDataOwner) {}
 
     ~TLinkedList() {
         Clear();
     }
 
+    TNode<T>* GetHead() const {
+        return head;
+    }
+
+    TNode<T>* GetTail() const {
+        return tail;
+    }
+
+    void SetHead(TNode<T>* newHead) {
+        head = newHead;
+    }
+
+    void SetTail(TNode<T>* newTail) {
+        tail = newTail;
+    }
     int GetSize() const override {
         return size;
     }
@@ -46,10 +57,15 @@ private:
     }
 
     void Clear() override {
-        TNode<T>* cur = head;
-        while (cur) {
-            TNode<T>* nodeToDelete = cur;
-            cur = cur->next;
+        TNode<T>* current = head;
+        while (current != nullptr) {
+            TNode<T>* nodeToDelete = current;
+            current = current->next;
+            if constexpr (std::is_pointer_v<T>) {
+                if (isDataOwner) {
+                    delete nodeToDelete->data;
+                }
+            }
             delete nodeToDelete;
         }
         head = nullptr;
@@ -58,7 +74,7 @@ private:
     }
 
     void Append(const T& data) {
-        auto* newNode = new TNode<T>(data);
+        TNode<T>* newNode = new TNode<T>(data);
         if (head == nullptr) {
             head = newNode;
             tail = head;
@@ -68,10 +84,11 @@ private:
             tail = newNode;
         }
         size++;
+
     }
 
     void Prepend(const T& data) {
-        auto* newNode = new TNode<T>(data);
+        TNode<T>* newNode = new TNode(data);
         if (head == nullptr) {
             head = newNode;
             tail = head;
@@ -85,7 +102,7 @@ private:
 
     bool InsertAtIndex(int index, const T& data) {
         if (index < 0 || index > size) {
-            return false;
+            throw std::runtime_error("index out of bounds");
         }
         if (index == 0) {
             Prepend(data);
@@ -109,29 +126,9 @@ private:
         return true;
     }
 
-    T* GetAtIndex(int index) {
+    T GetAtIndex(int index) {
         if (index < 0 || index >= size) {
-            return nullptr;
-        }
-        TNode<T>* cur;
-        int halfSize = size / 2;
-        if (index < halfSize) {
-            cur = head;
-            for (int i = 0; i < index; i++) {
-                cur = cur->next;
-            }
-        } else {
-            cur = tail;
-            for (int i = size - 1; i > index; i--) {
-                cur = cur->prev;
-            }
-        }
-        return &cur->data;
-    }
-
-    bool Remove(int index) {
-        if (index < 0 || index >= size) {
-            return false;
+            throw std::runtime_error("index out of bounds");
         }
         TNode<T>* cur;
         if (index < size / 2) {
@@ -145,23 +142,41 @@ private:
                 cur = cur->prev;
             }
         }
-        if (cur->prev == nullptr) {
-            head = cur->next;
-            if (head != nullptr) {
-                head->prev = nullptr;
-            } else {
-                tail = nullptr;
-            }
-        } else if (cur->next == nullptr) {
-            tail = cur->prev;
-            tail->next = nullptr;
-        } else {
-            cur->prev->next = cur->next;
-            cur->next->prev = cur->prev;
+        return cur->data;
+    }
+
+    T Remove(int index) {
+        if (index < 0 || index >= size) {
+            throw std::runtime_error("index out of bounds");
         }
+        TNode<T>* cur;
+        if (index < size / 2) {
+            cur = head;
+            for (int i = 0; i < index; i++) {
+                cur = cur->next;
+            }
+        } else {
+            cur = tail;
+            for (int i = size - 1; i > index; i--) {
+                cur = cur->prev;
+            }
+        }
+
+        if (cur->prev) {
+            cur->prev->next = cur->next;
+        } else {
+            head = cur->next;
+        }
+        if (cur->next) {
+            cur->next->prev = cur->prev;
+        } else {
+            tail = cur->prev;
+        }
+
+        T data = cur->data;
         delete cur;
         size--;
-        return true;
+        return data;
     }
 
     void Reverse() {
@@ -190,22 +205,44 @@ private:
 
     void PrintFirst10() const {
         int index = 0;
-        for (TNode<T>* cur = head; cur != nullptr && index < 10; cur = cur->next) {
-            std::cout << index++ << ". " << cur->data << std::endl;
-        }
+        for (TNode<T>* cur = head; cur != nullptr && index < 10;
+         cur = cur->next) {
+            std::cout << index++ << ". ";
+            if constexpr (std::is_pointer_v<T>) {
+                if (cur->data != nullptr)
+                    std::cout << *cur->data;
+            } else {
+                std::cout << cur->data;
+            }
+            std::cout << std::endl;
+         }
     }
 
     void PrintAll() const {
         int index = 0;
         for (TNode<T>* cur = head; cur != nullptr; cur = cur->next) {
-            std::cout << index++ << ". " << cur->data << std::endl;
-        }
+            std::cout << index++ << ". ";
+            if constexpr (std::is_pointer_v<T>) {
+                if (cur->data != nullptr)
+                    std::cout << *cur->data;
+            } else {
+                std::cout << cur->data;
+            }
+            std::cout << std::endl;
+         }
     }
 
     void PrintAllReverse() const {
         int index = size - 1;
         for (TNode<T>* cur = tail; cur != nullptr; cur = cur->prev) {
-            std::cout << index-- << ". " << cur->data << std::endl;
+            std::cout << index-- << ". ";
+            if constexpr (std::is_pointer_v<T>) {
+                if (cur->data != nullptr)
+                    std::cout << *cur->data;
+            } else {
+                std::cout << cur->data;
+            }
+            std::cout << std::endl;
         }
     }
 };

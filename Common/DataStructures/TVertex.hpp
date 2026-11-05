@@ -47,29 +47,6 @@ public:
     }
 
     TEdge<T>* GetEdgeAt(int index) {
-        TEdge<T>** edge = edges.GetAtIndex(index);
-
-        return edge != nullptr ? *edge : nullptr;
-    }
-
-    TVertex<T>* GetNeighborAt(int index) {
-        TEdge<T>* edge = GetEdgeAt(index);
-
-        return edge != nullptr ? edge->GetOther(this) : nullptr;
-    }
-
-    TEdge<T>* GetEdgeTo(TVertex<T>* other) {
-        for (auto* current = edges.head;
-             current != nullptr;
-             current = current->next) {
-
-            TEdge<T>* edge = current->data;
-
-            if (edge->GetOther(this) == other) {
-                return edge;
-            }
-        }
-
-        return nullptr;
+        return edges.GetAtIndex(index);
     }
 };

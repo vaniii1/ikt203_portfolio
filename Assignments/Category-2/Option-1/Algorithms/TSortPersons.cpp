@@ -4,10 +4,10 @@
 
 #include "TSortPersons.h"
 
-TNode<TPerson>* TSortPersons::SplitList(TNode<TPerson> *source) {
-    TNode<TPerson>* fast = source;
-    TNode<TPerson>* slow = source;
-    TNode<TPerson>* slowPrev = nullptr;
+TNode<TPerson*>* TSortPersons::SplitList(TNode<TPerson*> *source) {
+    TNode<TPerson*>* fast = source;
+    TNode<TPerson*>* slow = source;
+    TNode<TPerson*>* slowPrev = nullptr;
 
     while (fast != nullptr && fast->next != nullptr) {
         fast = fast->next->next;
@@ -22,14 +22,14 @@ TNode<TPerson>* TSortPersons::SplitList(TNode<TPerson> *source) {
     return slow;
 }
 
-TNode<TPerson>* TSortPersons::Merge(TNode<TPerson> *a, TNode<TPerson> *b, FComparePersons compareFunc) {
+TNode<TPerson*>* TSortPersons::Merge(TNode<TPerson*> *a, TNode<TPerson*> *b, FComparePersons compareFunc) {
     if (a == nullptr) return b;
     if (b == nullptr) return a;
 
-    TNode<TPerson>* resultHead = nullptr;
-    TNode<TPerson>* resultTail = nullptr;
+    TNode<TPerson*>* resultHead = nullptr;
+    TNode<TPerson*>* resultTail = nullptr;
 
-    if (compareFunc(a->data, b->data) <= 0) {
+    if (compareFunc(*a->data, *b->data) <= 0) {
         resultHead = a;
         a = a->next;
     } else {
@@ -39,7 +39,7 @@ TNode<TPerson>* TSortPersons::Merge(TNode<TPerson> *a, TNode<TPerson> *b, FCompa
 
     resultTail = resultHead;
     while (a != nullptr && b != nullptr) {
-        if (compareFunc(a->data, b->data) <= 0) {
+        if (compareFunc(*a->data, *b->data) <= 0) {
             resultTail->next = a;
             resultTail = a;
             a = a->next;
@@ -55,13 +55,13 @@ TNode<TPerson>* TSortPersons::Merge(TNode<TPerson> *a, TNode<TPerson> *b, FCompa
     return resultHead;
 }
 
-TNode<TPerson>* TSortPersons::MergeSortRecursive(TNode<TPerson> *headRef, FComparePersons compareFunc) {
+TNode<TPerson*>* TSortPersons::MergeSortRecursive(TNode<TPerson*> *headRef, FComparePersons compareFunc) {
     if (headRef == nullptr || headRef->next == nullptr) {
         return headRef;
     }
 
-    TNode<TPerson>* left = headRef;
-    TNode<TPerson>* right = SplitList(headRef);
+    TNode<TPerson*>* left = headRef;
+    TNode<TPerson*>* right = SplitList(headRef);
 
     left = MergeSortRecursive(left, compareFunc);
     right = MergeSortRecursive(right, compareFunc);
@@ -69,29 +69,24 @@ TNode<TPerson>* TSortPersons::MergeSortRecursive(TNode<TPerson> *headRef, FCompa
     return Merge(left, right, compareFunc);
 }
 
-void TSortPersons::MergeSort(TLinkedList<TPerson> &list, FComparePersons compareFunc) {
-    if (list.head == nullptr || list.head->next == nullptr) {
+void TSortPersons::MergeSort(TLinkedList<TPerson*> &list, FComparePersons compareFunc) {
+    TNode<TPerson*>* headNode = list.GetHead();
+    if (headNode == nullptr || headNode->next == nullptr) {
         return;
     }
 
-    list.head = MergeSortRecursive(list.head, compareFunc);
+    headNode = MergeSortRecursive(headNode, compareFunc);
 
-    // Rebuild the prev pointers and update tail.
-
-    TNode<TPerson>* current = list.head;
-
-    TNode<TPerson>* previous = nullptr;
+    TNode<TPerson*>* current = headNode;
+    TNode<TPerson*>* previous = nullptr;
 
     while (current != nullptr) {
-
         current->prev = previous;
-
         previous = current;
-
         current = current->next;
     }
-
-    list.tail = previous;
+    list.SetHead(headNode);
+    list.SetTail(previous);
 }
 
 void TSortPersons::QuickSortArray(TPerson **array, int size, FComparePersons compareFunc) {

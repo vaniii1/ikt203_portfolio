@@ -12,15 +12,14 @@
 *         Please ask for help in Discord if you have any questions or need assistance with the implementation.
 */
 
-template <typename T, int Capacity = 20>
+template <typename T>
 class TStack : public TCollection<T> {
-private:
-    T* arr[Capacity];
-    int bottom = 0;
-    int size = 0;
-
 public:
 
+private:
+    TLinkedList<T*> list{false};
+
+public:
     TStack() = default;
 
     ~TStack() {
@@ -28,34 +27,24 @@ public:
     }
 
     int GetSize() const override {
-        return size;
+        return list.GetSize();
     }
 
     bool IsEmpty() const override {
-        return size == 0;
+        return list.IsEmpty();
     }
 
     void Clear() override {
-        while (!IsEmpty()) {
-            delete Pop();
-        }
-        bottom = 0;
+        list.Clear();
     }
 
-    void Push(T *action) {
-        if (size == Capacity) {
-            delete arr[bottom];
-            bottom = (bottom + 1) % Capacity;
-            size--;
-        }
-        arr[(bottom + size) % Capacity] = action;
-        size++;
+    void Push(T *data) {
+        list.Append(data);
     }
 
     T* Pop() {
         if (IsEmpty()) return nullptr;
-        size--;
-        return arr[(bottom + size) % Capacity];
+        return list.Remove(list.GetSize() - 1);
     }
 };
 

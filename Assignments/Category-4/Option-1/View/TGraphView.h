@@ -17,7 +17,7 @@ class TGraphView {
         std::cout << "----------- Minimum Spanning Tree -----------" << std::endl;
 
         for (int i = 0; i < mst.GetSize(); i++) {
-            TEdge<T>* edge = *mst.GetAtIndex(i);
+            TEdge<T>* edge = mst.GetAtIndex(i);
 
             std::cout << "Source : " << edge->GetSource()->GetName()
                       << ", Destination : " << edge->GetDestination()->GetName()

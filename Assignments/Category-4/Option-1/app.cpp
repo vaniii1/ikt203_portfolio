@@ -9,7 +9,7 @@ int RunApp(int argc, char* argv[]) {
 
 	TGraph<int>* graph = loader.GetGraph();
 
-	TLinkedList<TEdge<int>*> mst;
+	TLinkedList<TEdge<int>*> mst(false);
 	PrimMST(*graph, mst);
 
 	TGraphView::PrintMST(mst);

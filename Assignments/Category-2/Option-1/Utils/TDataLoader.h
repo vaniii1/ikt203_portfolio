@@ -12,14 +12,14 @@ class TDataLoader {
 private:
     const int EMPLOYEE_COUNT = 1500;
 
-    TLinkedList<TPerson> *guests;
-    TLinkedList<TPerson> *employees;
+    TLinkedList<TPerson*> *guests;
+    TLinkedList<TPerson*> *employees;
     bool OnNameRead(const int index, const int total,
                 const std::string& first, const std::string& last);
 public:
 
-    TLinkedList<TPerson>* GetGuests() const;
-    TLinkedList<TPerson>* GetEmployees() const;
+    TLinkedList<TPerson*>* GetGuests() const;
+    TLinkedList<TPerson*>* GetEmployees() const;
 
     TDataLoader();
 

@@ -12,7 +12,7 @@ struct TEmployee {
     std::string lastName;
 
     std::string ToString() const {
-        return firstName + " " + lastName + ", employeeID : " + std::to_string(employeeID);
+        return lastName + " " + firstName + ", employeeID : " + std::to_string(employeeID);
     }
 };
 
